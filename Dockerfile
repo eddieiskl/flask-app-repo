@@ -1,24 +1,25 @@
-# Use an official Python runtime as a parent image
-FROM python:3.12-slim
+# Dockerfile
+FROM python:3.8-slim
 
-# Set the working directory in the container
-WORKDIR /app
+# Install required packages
+COPY requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
-# Copy the current directory contents into the container at /app
+# Install Selenium and the browser driver (e.g., ChromeDriver)
+RUN pip install selenium
+RUN apt-get update && apt-get install -y wget unzip
+RUN wget https://chromedriver.storage.googleapis.com/89.0.4389.23/chromedriver_linux64.zip
+RUN unzip chromedriver_linux64.zip
+RUN mv chromedriver /usr/local/bin/
+
+# Copy the application files
 COPY . /app
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Set the working directory
+WORKDIR /app
 
-# Copy the Scores.txt file to the root of the container filesystem
-COPY Scores.txt /Scores.txt
-
-# Expose the port the app runs on
+# Expose the application port
 EXPOSE 5000
 
-# Define environment variables
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
-# Run the Flask app when the container launches
-CMD ["flask", "run"]
+# Run the Flask application
+CMD ["flask", "run", "--host=0.0.0.0"]
