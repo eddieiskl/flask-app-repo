@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World of Games</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .menu-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .menu-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+            background-color: #0056b3 !important;
+            border-color: #004085 !important;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container menu-container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <h1>Welcome to the World of Games, {{ player_name }}!</h1>
+                <div class="btn-container mt-4">
+                    <a href="{{ url_for('memory_game') }}" class="btn btn-primary btn-block mb-2">Memory Game</a>
+                    <a href="{{ url_for('guess_game') }}" class="btn btn-primary btn-block mb-2">Guess Game</a>
+                    <a href="{{ url_for('currency_roulette_game') }}" class="btn btn-primary btn-block mb-2">Currency Roulette</a>
+                    <a href="{{ url_for('score') }}" class="btn btn-secondary btn-block mb-2">View Scores</a>
+                    <a href="{{ url_for('welcome') }}" class="btn btn-secondary btn-block mb-2">Change Player</a>
+                    <a href="{{ url_for('quit') }}" class="btn btn-danger btn-block">Quit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

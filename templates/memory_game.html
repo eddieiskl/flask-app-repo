@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .memory-game-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .btn {
+            margin: 10px;
+        }
+    </style>
+    <script>
+        function validateInput(event) {
+            let input = event.target.value;
+            event.target.value = input.replace(/[^0-9 ]/g, '');
+        }
+
+        function hideSequence() {
+            document.getElementById('sequence').style.display = 'none';
+            document.getElementById('sequence-form').style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(hideSequence, 1000); // Hide after 1 second
+        });
+    </script>
+</head>
+<body class="bg-light">
+    <div class="container memory-game-container">
+        <h1>Memory Game</h1>
+        {% if show_sequence %}
+            <p id="sequence">Memorize this sequence: {{ sequence }}</p>
+            <form id="sequence-form" method="post" style="display: none;">
+                <div class="form-group">
+                    <label for="sequence">Enter the sequence:</label>
+                    <input type="text" class="form-control" id="sequence" name="sequence" oninput="validateInput(event)">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        {% else %}
+            <form method="post">
+                <div class="form-group">
+                    <label for="difficulty">Choose difficulty:</label>
+                    <div>
+                        <button type="submit" name="difficulty" value="1" class="btn btn-primary">1</button>
+                        <button type="submit" name="difficulty" value="2" class="btn btn-primary">2</button>
+                        <button type="submit" name="difficulty" value="3" class="btn btn-primary">3</button>
+                        <button type="submit" name="difficulty" value="4" class="btn btn-primary">4</button>
+                        <button type="submit" name="difficulty" value="5" class="btn btn-primary">5</button>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Main Menu</a>
+    </div>
+</body>
+</html>

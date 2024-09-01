@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wog-scores
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wog-scores
+  template:
+    metadata:
+      labels:
+        app: wog-scores
+    spec:
+      containers:
+      - name: wog-scores
+        image: eddieiskl/wog-scores:latest
+        ports:
+        - containerPort: 5000

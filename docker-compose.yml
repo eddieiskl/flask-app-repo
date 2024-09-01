@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: eddieiskl/flask-app:latest
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_APP: app.py
+      FLASK_RUN_HOST: 0.0.0.0
+    volumes:
+      - ./Scores.txt:/Scores.txt
+
+  push:
+    image: docker
+    command: /bin/sh -c "docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN && docker push eddieiskl/flask-app:latest"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - web

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Score</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .score-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .score-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .btn {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container score-container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 text-center">
+                <h1>Your Score</h1>
+                <p id="current_score">Your current score is: {{ current_score }}</p>
+                <h2>Top 5 Scores</h2>
+                <ul class="list-unstyled" id="top_scores">
+                    {% for name, score in top_scores %}
+                        <li>{{ name }}: {{ score }}</li>
+                    {% endfor %}
+                </ul>
+                <div>
+                    <a href="/index" class="btn btn-secondary">Back to Main Menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

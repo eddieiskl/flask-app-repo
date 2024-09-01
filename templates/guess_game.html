@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Game</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .game-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .game-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .game-container p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container game-container">
+        <h1>Guess Game</h1>
+        {% if ask_for_guess %}
+        <form method="POST">
+            <div class="form-group">
+                <label for="guess">Enter your guess:</label>
+                <input type="number" class="form-control" id="guess" name="guess" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        {% else %}
+        <p>Guess the number chosen by the computer. Select the difficulty level to start.</p>
+        <form method="POST">
+            <div class="form-group">
+                <label for="difficulty">Choose difficulty (1-5):</label>
+                <div class="btn-container">
+                    <button type="submit" name="difficulty" value="1" class="btn btn-primary">1</button>
+                    <button type="submit" name="difficulty" value="2" class="btn btn-primary">2</button>
+                    <button type="submit" name="difficulty" value="3" class="btn btn-primary">3</button>
+                    <button type="submit" name="difficulty" value="4" class="btn btn-primary">4</button>
+                    <button type="submit" name="difficulty" value="5" class="btn btn-primary">5</button>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Main Menu</a>
+    </div>
+</body>
+</html>

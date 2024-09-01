@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Result - Error</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .result-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .result-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .btn:hover {
+            background-color: #0056b3 !important;
+            border-color: #004085 !important;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container result-container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 text-center">
+                <h1 class="mt-5">{{ result_message }}</h1>
+                <div class="alert alert-warning" role="alert">
+                    <img src="{{ gif_url }}" class="img-fluid my-4" alt="Error Giphy">
+                </div>
+                <form class="mt-4">
+                    <a href="{{ retry_url }}" class="btn btn-primary btn-block">Retry</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary btn-block">Main Menu</a>
+                    <a href="{{ url_for('quit') }}" class="btn btn-danger btn-block">Quit</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
