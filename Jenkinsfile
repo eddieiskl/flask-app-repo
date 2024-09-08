@@ -45,15 +45,13 @@ pipeline {
                         docker rm -f flask-app || true
                     '''
 
-                    // Ensure no container is using the image before removing it
+                    // List all containers and remove any using the image before removing the image
                     sh '''
-                        if docker ps -a -q -f "ancestor=eddieiskl/flask-app:latest"; then
-                            docker rm $(docker ps -a -q -f "ancestor=eddieiskl/flask-app:latest") || true
-                        fi
+                        docker ps -a | grep eddieiskl/flask-app:latest | awk '{print $1}' | xargs -r docker rm -f
                     '''
 
-                    // Remove the Docker image forcefully
-                    sh 'docker rmi -f eddieiskl/flask-app:latest'
+                    // Forcefully remove the Docker image
+                    sh 'docker rmi -f eddieiskl/flask-app:latest || true'
                 }
             }
         }
