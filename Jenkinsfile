@@ -16,7 +16,7 @@ pipeline {
         stage('Run') {
             steps {
                 script {
-                    // Remove any existing container
+                    // Stop and remove any existing container before running a new one
                     sh '''
                         if [ "$(docker ps -a -q -f name=flask-app)" ]; then
                             docker rm -f flask-app
@@ -39,15 +39,13 @@ pipeline {
         stage('Finalize') {
             steps {
                 script {
-                    // Stop and forcefully remove the container
+                    // Stop and forcefully remove the container using the image
                     sh '''
-                        docker stop flask-app || true
-                        docker rm -f flask-app || true
-                    '''
-
-                    // List all containers and remove any using the image before removing the image
-                    sh '''
-                        docker ps -a | grep eddieiskl/flask-app:latest | awk '{print $1}' | xargs -r docker rm -f
+                        container_id=$(docker ps -a -q -f ancestor=eddieiskl/flask-app:latest)
+                        if [ -n "$container_id" ]; then
+                            docker stop $container_id || true
+                            docker rm -f $container_id || true
+                        fi
                     '''
 
                     // Forcefully remove the Docker image
