@@ -1,21 +1,17 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
 
-# Set up the browser driver (e.g., Chrome)
 driver = webdriver.Chrome()
 
-# Navigate to the application URL
-driver.get('http://localhost:8777')
+# Update the URL to match the port 8777
+driver.get('http://localhost:8777/score')
 
-# Example test: Check if the Scores.txt content is displayed on the page
 try:
-    element = driver.find_element(By.ID, 'score-content')
-    print("Test Passed: Score content found!")
-except:
+    element = driver.find_element(By.ID, 'score')
+    print(f"Test Passed: Score is {element.text}")
+except Exception as e:
     print("Test Failed: Score content not found!")
-    driver.quit()
+    print(e)
     raise Exception("Test Failed")
 
-# Close the browser
 driver.quit()

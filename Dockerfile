@@ -18,8 +18,8 @@ COPY . /app
 # Set the working directory
 WORKDIR /app
 
-# Expose the application port
-EXPOSE 5000
+# Expose the correct port
+EXPOSE 8777
 
 # Run the Flask application
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["python", "MainScores.py"]  #Ensure it runs MainScores.py directly

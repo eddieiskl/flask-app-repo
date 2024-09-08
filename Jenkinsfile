@@ -1,45 +1,40 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/eddieiskl/flask-app.git'
+                git 'https://github.com/eddieiskl/flask-app-repo.git'
             }
         }
         stage('Build') {
             steps {
                 script {
-                    // Change directory to the location of your Dockerfile
-                    sh 'cd flask-app-repo && docker build -t flask-app .'
+                    docker.build("eddieiskl/flask-app:latest")
                 }
             }
         }
         stage('Run') {
             steps {
                 script {
-                    // Run the container and mount the Scores.txt file
-                    sh 'docker run -d -p 8777:5000 -v $(pwd)/Scores.txt:/app/Scores.txt --name flask-app-test flask-app'
+                    // Ensure port 8777 is used here
+                    sh 'docker run -d -p 8777:8777 --name flask-app eddieiskl/flask-app:latest'
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    // Run the selenium tests
-                    sh 'python3 flask-app-repo/e2e.py'
+                    sh 'python e2e.py'
                 }
             }
         }
         stage('Finalize') {
             steps {
                 script {
-                    // Stop and remove the container, then push the image to DockerHub
-                    sh 'docker stop flask-app-test'
-                    sh 'docker rm flask-app-test'
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                        sh 'docker push flask-app'
+                    sh 'docker stop flask-app'
+                    sh 'docker rm flask-app'
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
+                        docker.image("eddieiskl/flask-app:latest").push()
                     }
                 }
             }
