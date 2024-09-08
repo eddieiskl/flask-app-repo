@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build a new image
+                    // Build the Docker image
                     docker.build('eddieiskl/flask-app:latest')
                 }
             }
@@ -17,13 +17,13 @@ pipeline {
         stage('Run') {
             steps {
                 script {
-                    // Stop and remove the existing container before running a new one
+                    // Stop and remove any existing container with the name 'flask-app'
                     sh '''
                         if [ "$(docker ps -a -q -f name=flask-app)" ]; then
                             docker rm -f flask-app
                         fi
                     '''
-                    // Run the new container with a fixed name 'flask-app'
+                    // Run the container
                     sh '''
                         docker run -d -p 8777:8777 -v /Users/MacBook/.jenkins/workspace/ThePipeLine/Scores.txt:/app/Scores.txt --name flask-app eddieiskl/flask-app:latest
                     '''
@@ -41,7 +41,7 @@ pipeline {
         stage('Finalize') {
             steps {
                 script {
-                    // Stop the container first
+                    // Stop the container if it exists
                     sh '''
                         if [ "$(docker ps -q -f name=flask-app)" ]; then
                             docker stop flask-app
@@ -53,7 +53,7 @@ pipeline {
                             docker rm flask-app
                         fi
                     '''
-                    // Forcefully remove the image after removing the container
+                    // Forcefully remove the image after the container is removed
                     sh '''
                         if [ "$(docker images -q eddieiskl/flask-app:latest)" ]; then
                             docker rmi -f eddieiskl/flask-app:latest
@@ -65,7 +65,7 @@ pipeline {
     }
     post {
         always {
-            cleanWs()
+            cleanWs() // Clean up workspace after every build
         }
     }
 }
