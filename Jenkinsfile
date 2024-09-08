@@ -39,11 +39,13 @@ pipeline {
         stage('Finalize') {
             steps {
                 script {
-                    // Stop and remove the container
-                    sh 'docker stop flask-app'
-                    sh 'docker rm flask-app'
+                    // Stop and remove the container forcefully
+                    sh '''
+                        docker stop flask-app || true
+                        docker rm -f flask-app || true
+                    '''
 
-                    // Remove the Docker image
+                    // Remove the Docker image forcefully
                     sh 'docker rmi -f eddieiskl/flask-app:latest'
                 }
             }
