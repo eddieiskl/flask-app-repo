@@ -39,15 +39,14 @@ pipeline {
         stage('Finalize') {
             steps {
                 script {
-                    // Stop and forcefully remove the container using the image
+                    // Stop and remove all containers using the image
                     sh '''
-                        container_id=$(docker ps -a -q -f ancestor=eddieiskl/flask-app:latest)
-                        if [ -n "$container_id" ]; then
-                            docker stop $container_id || true
-                            docker rm -f $container_id || true
+                        container_ids=$(docker ps -a -q -f ancestor=eddieiskl/flask-app:latest)
+                        if [ -n "$container_ids" ]; then
+                            docker stop $container_ids || true
+                            docker rm -f $container_ids || true
                         fi
                     '''
-
                     // Forcefully remove the Docker image
                     sh 'docker rmi -f eddieiskl/flask-app:latest || true'
                 }
