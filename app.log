@@ -1,0 +1,30 @@
+2024-09-08 18:06:50,437 -  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+2024-09-08 18:06:50,439 -  * Restarting with stat
+2024-09-08 18:06:50,518 -  * Debugger is active!
+2024-09-08 18:06:50,527 -  * Debugger PIN: 285-786-989
+2024-09-08 18:07:25,536 - 127.0.0.1 - - [08/Sep/2024 18:07:25] "[37mGET / HTTP/1.1[0m" 200 -
+2024-09-08 18:07:28,596 - 127.0.0.1 - - [08/Sep/2024 18:07:28] "[32mPOST /set_name HTTP/1.1[0m" 302 -
+2024-09-08 18:07:28,604 - 127.0.0.1 - - [08/Sep/2024 18:07:28] "[37mGET /index HTTP/1.1[0m" 200 -
+2024-09-08 18:07:29,692 - 127.0.0.1 - - [08/Sep/2024 18:07:29] "[37mGET /score HTTP/1.1[0m" 200 -
+2024-09-08 18:07:31,566 - 127.0.0.1 - - [08/Sep/2024 18:07:31] "[37mGET /index HTTP/1.1[0m" 200 -
+2024-09-08 18:09:21,637 - 127.0.0.1 - - [08/Sep/2024 18:09:21] "[37mGET /score HTTP/1.1[0m" 200 -
+2024-09-08 18:18:18,479 - 127.0.0.1 - - [08/Sep/2024 18:18:18] "[37mGET / HTTP/1.1[0m" 200 -
+2024-09-08 18:20:59,121 -  * Detected change in '/Users/MacBook/PycharmProjects/TheWoWCopy/flask-app-repo/app.py', reloading
+2024-09-08 18:20:59,158 -  * Restarting with stat
+2024-09-08 18:20:59,331 -  * Debugger is active!
+2024-09-08 18:20:59,340 -  * Debugger PIN: 285-786-989
+2024-09-08 18:22:29,284 -  * Running on http://0.0.0.0:8777/ (Press CTRL+C to quit)
+2024-09-08 18:22:29,287 -  * Restarting with stat
+2024-09-08 18:22:29,372 -  * Debugger is active!
+2024-09-08 18:22:29,377 -  * Debugger PIN: 285-786-989
+2024-09-08 18:22:33,483 - 127.0.0.1 - - [08/Sep/2024 18:22:33] "[37mGET / HTTP/1.1[0m" 200 -
+2024-09-08 18:22:33,622 - 127.0.0.1 - - [08/Sep/2024 18:22:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-09-08 18:22:38,337 - 127.0.0.1 - - [08/Sep/2024 18:22:38] "[32mPOST /set_name HTTP/1.1[0m" 302 -
+2024-09-08 18:22:38,343 - 127.0.0.1 - - [08/Sep/2024 18:22:38] "[37mGET /index HTTP/1.1[0m" 200 -
+2024-09-08 18:22:40,802 - 127.0.0.1 - - [08/Sep/2024 18:22:40] "[37mGET /score HTTP/1.1[0m" 200 -
+2024-09-08 18:23:07,339 - 127.0.0.1 - - [08/Sep/2024 18:23:07] "[37mGET /memory_game HTTP/1.1[0m" 200 -
+2024-09-08 18:23:08,357 - 127.0.0.1 - - [08/Sep/2024 18:23:08] "[37mPOST /memory_game HTTP/1.1[0m" 200 -
+2024-09-08 18:23:11,410 - 127.0.0.1 - - [08/Sep/2024 18:23:11] "[32mPOST /memory_game HTTP/1.1[0m" 302 -
+2024-09-08 18:23:11,422 - 127.0.0.1 - - [08/Sep/2024 18:23:11] "[37mGET /result?result_message=Congratulations%21+You+won+the+Memory+Game%21&retry_url=%2Fmemory_game&gif_url=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2FlnlAifQdenMxW%2Fgiphy.gif%3Fcid%3D178324e3i2nnc2qc2aq61kmsh8breibk3k4p2asymhijae49%26ep%3Dv1_gifs_search%26rid%3Dgiphy.gif%26ct%3Dg HTTP/1.1[0m" 200 -
+2024-09-08 18:23:12,520 - 127.0.0.1 - - [08/Sep/2024 18:23:12] "[37mGET /index HTTP/1.1[0m" 200 -
+2024-09-08 18:23:13,531 - 127.0.0.1 - - [08/Sep/2024 18:23:13] "[37mGET /score HTTP/1.1[0m" 200 -
