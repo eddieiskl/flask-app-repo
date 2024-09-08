@@ -39,10 +39,17 @@ pipeline {
         stage('Finalize') {
             steps {
                 script {
-                    // Stop and remove the container forcefully
+                    // Stop and forcefully remove the container
                     sh '''
                         docker stop flask-app || true
                         docker rm -f flask-app || true
+                    '''
+
+                    // Ensure no container is using the image before removing it
+                    sh '''
+                        if docker ps -a -q -f "ancestor=eddieiskl/flask-app:latest"; then
+                            docker rm $(docker ps -a -q -f "ancestor=eddieiskl/flask-app:latest") || true
+                        fi
                     '''
 
                     // Remove the Docker image forcefully
