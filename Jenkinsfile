@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_IMAGE = 'eddieiskl/flask-app:latest'
+        CONTAINER_NAME = 'flask-app'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -9,23 +13,20 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build the Docker image
-                    docker.build('eddieiskl/flask-app:latest')
+                    docker.build(DOCKER_IMAGE)
                 }
             }
         }
         stage('Run') {
             steps {
                 script {
-                    // Stop and remove any existing container with the name 'flask-app'
+                    // Clean up any existing container
                     sh '''
-                        if [ "$(docker ps -a -q -f name=flask-app)" ]; then
-                            docker rm -f flask-app
-                        fi
-                    '''
-                    // Run the container
-                    sh '''
-                        docker run -d -p 8777:8777 -v /Users/MacBook/.jenkins/workspace/ThePipeLine/Scores.txt:/app/Scores.txt --name flask-app eddieiskl/flask-app:latest
+                    CONTAINER_ID=$(docker ps -a -q -f name=${CONTAINER_NAME})
+                    if [ -n "$CONTAINER_ID" ]; then
+                        docker rm -f ${CONTAINER_NAME}
+                    fi
+                    docker run -d -p 8777:8777 -v ${WORKSPACE}/Scores.txt:/app/Scores.txt --name ${CONTAINER_NAME} ${DOCKER_IMAGE}
                     '''
                 }
             }
@@ -33,7 +34,6 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Run the test script
                     sh 'python e2e.py'
                 }
             }
@@ -41,23 +41,14 @@ pipeline {
         stage('Finalize') {
             steps {
                 script {
-                    // Stop the container if it exists
+                    // Stop the container and wait for it to stop before removing the image
                     sh '''
-                        if [ "$(docker ps -q -f name=flask-app)" ]; then
-                            docker stop flask-app
-                        fi
-                    '''
-                    // Remove the container after stopping
-                    sh '''
-                        if [ "$(docker ps -a -q -f name=flask-app)" ]; then
-                            docker rm flask-app
-                        fi
-                    '''
-                    // Forcefully remove the image after the container is removed
-                    sh '''
-                        if [ "$(docker images -q eddieiskl/flask-app:latest)" ]; then
-                            docker rmi -f eddieiskl/flask-app:latest
-                        fi
+                    docker stop ${CONTAINER_NAME}
+                    while docker ps -a --filter "name=${CONTAINER_NAME}" --filter "status=running" | grep -q ${CONTAINER_NAME}; do
+                        echo "Waiting for container to stop..."
+                        sleep 2
+                    done
+                    docker rmi -f ${DOCKER_IMAGE}
                     '''
                 }
             }
@@ -65,7 +56,7 @@ pipeline {
     }
     post {
         always {
-            cleanWs() // Clean up workspace after every build
+            cleanWs()
         }
     }
 }
